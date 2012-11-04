@@ -1,0 +1,3 @@
+[submodule "src/cv-pls"]
+	path = src/cv-pls
+	url = git://github.com/DaveRandom/cv-pls.git
