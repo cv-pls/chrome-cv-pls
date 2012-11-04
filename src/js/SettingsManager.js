@@ -74,8 +74,7 @@ CvPlsHelper.chrome.SettingsManager = function(pluginSettings, dupeSettingsManage
         pluginSettings.saveSetting('oneBoxHeight', this.value);
       });
       self.oneBoxHeight.addEventListener('click', function(e) {
-        e.stopPropagation();
-        return false;
+        e.preventDefault();
       });
     }
   };
@@ -199,8 +198,7 @@ CvPlsHelper.chrome.SettingsManager = function(pluginSettings, dupeSettingsManage
         pluginSettings.saveSetting('pollInterval', this.value);
       });
       self.pollInterval.addEventListener('click', function(e) {
-        e.stopPropagation();
-        return false;
+        e.preventDefault();
       });
     }
   };

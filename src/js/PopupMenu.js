@@ -8,7 +8,7 @@ CvPlsHelper.chrome.PopUpMenu = function() {
   var version, self = this;
 
   function getOptionsUrl() {
-    return chrome.extension.getURL('chrome/html/settings.html');
+    return chrome.extension.getURL('html/settings.html');
   };
 
   function getVersion() {

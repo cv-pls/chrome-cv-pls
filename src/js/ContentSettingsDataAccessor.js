@@ -62,12 +62,12 @@ CvPlsHelper.chrome.ContentSettingsDataAccessor = function(settingsDataStore, def
   }
 
   this.saveSetting = function(key, value) {
-    settingsDataStore.saveSetting(key, value);
     chrome.extension.sendMessage({
       method: 'saveSetting',
       key: key,
       value: value
     });
+    settingsDataStore.saveSetting(key, value);
   };
 
   this.getSetting = function(key) {

@@ -4,28 +4,27 @@
   "manifest_version": 2,
   "description": "Helps to close questions on StackOverflow.com",
   "icons": {
-    "16": "img/icon16.png",
-    "48": "img/icon48.png",
-    "128": "img/icon128.png"
+    "16": "cv-pls/icons/icon16.png",
+    "48": "cv-pls/icons/icon48.png",
+    "128": "cv-pls/icons/icon128.png"
   },
   "background": {
     "scripts": [
+      "cv-pls/src/CvPlsHelper.js",
 
-      "js/CvPlsHelper.js",
+      "js/BackgroundSettingsDataAccessor.js",
+      "js/DefaultSettings.js",
+      "js/DesktopNotificationManager.js",
+      "js/SettingsDataStore.js",
 
-      "chrome/js/BackgroundSettingsDataAccessor.js",
-      "chrome/js/DefaultSettings.js",
-      "chrome/js/DesktopNotificationManager.js",
-      "chrome/js/SettingsDataStore.js",
-
-      "chrome/js/pages/background.js"
+      "js/pages/background.js"
     ]
   },
-  "options_page": "chrome/html/settings.html",
+  "options_page": "html/settings.html",
   "page_action": {
     "default_title": "[cv-pls]",
-    "default_icon": "img/icon19.png",
-    "default_popup": "chrome/html/popup.html"
+    "default_icon": "cv-pls/icons/icon19.png",
+    "default_popup": "html/popup.html"
   },
   "content_scripts": [
     {
@@ -34,39 +33,38 @@
         "http://chat.stackoverflow.com/transcript/*"
       ],
       "js": [
+        "cv-pls/lib/jquery-1.7.1.min.js",
+        "cv-pls/lib/jquery-ui-1.8.18.custom.min.js",
+        "cv-pls/lib/griphandler-0.10.1.min.js",
 
-        "js/lib/jquery-1.7.1.min.js",
-        "js/lib/jquery-ui-1.8.18.custom.min.js",
-        "js/lib/griphandler-0.10.1.min.js",
+        "cv-pls/src/CvPlsHelper.js",
 
-        "js/CvPlsHelper.js",
+        "cv-pls/src/AudioPlayer.js",
+        "cv-pls/src/AvatarNotification.js",
+        "cv-pls/src/ButtonsManager.js",
+        "cv-pls/src/ChatRoom.js",
+        "cv-pls/src/CvBacklog.js",
+        "cv-pls/src/DesktopNotification.js",
+        "cv-pls/src/Post.js",
+        "cv-pls/src/RequestQueue.js",
+        "cv-pls/src/RequestStack.js",
+        "cv-pls/src/SoundManager.js",
+        "cv-pls/src/StackApi.js",
+        "cv-pls/src/StatusPolling.js",
+        "cv-pls/src/StatusRequestProcessor.js",
+        "cv-pls/src/VoteQueueProcessor.js",
+        "cv-pls/src/VoteRemoveProcessor.js",
+        "cv-pls/src/VoteRequestBuffer.js",
+        "cv-pls/src/VoteRequestFormatter.js",
+        "cv-pls/src/VoteRequestListener.js",
+        "cv-pls/src/VoteRequestProcessor.js",
 
-        "js/AudioPlayer.js",
-        "js/AvatarNotification.js",
-        "js/ButtonsManager.js",
-        "js/ChatRoom.js",
-        "js/CvBacklog.js",
-        "js/DesktopNotification.js",
-        "js/Post.js",
-        "js/RequestQueue.js",
-        "js/RequestStack.js",
-        "js/SoundManager.js",
-        "js/StackApi.js",
-        "js/StatusPolling.js",
-        "js/StatusRequestProcessor.js",
-        "js/VoteQueueProcessor.js",
-        "js/VoteRemoveProcessor.js",
-        "js/VoteRequestBuffer.js",
-        "js/VoteRequestFormatter.js",
-        "js/VoteRequestListener.js",
-        "js/VoteRequestProcessor.js",
+        "js/ContentSettingsDataAccessor.js",
+        "js/DefaultSettings.js",
+        "js/DesktopNotificationDispatcher.js",
+        "js/SettingsDataStore.js",
 
-        "chrome/js/ContentSettingsDataAccessor.js",
-        "chrome/js/DefaultSettings.js",
-        "chrome/js/DesktopNotificationDispatcher.js",
-        "chrome/js/SettingsDataStore.js",
-
-        "chrome/js/bootstraps/chat.js"
+        "js/bootstraps/chat.js"
       ],
       "run_at": "document_idle",
       "all_frames": false
@@ -77,18 +75,18 @@
         "http://stackoverflow.com/q/*"
       ],
       "js": [
-        "js/lib/jquery-1.7.1.min.js",
-        "js/lib/putCursorAtEnd.js",
+        "cv-pls/lib/jquery-1.7.1.min.js",
+        "cv-pls/lib/putCursorAtEnd.js",
 
-        "js/CvPlsHelper.js",
+        "cv-pls/src/CvPlsHelper.js",
 
-        "chrome/js/ClosePopup.js",
-        "chrome/js/ContentSettingsDataAccessor.js",
-        "chrome/js/DefaultSettings.js",
-        "chrome/js/DupeSelector.js",
-        "chrome/js/SettingsDataStore.js",
+        "js/ClosePopup.js",
+        "js/ContentSettingsDataAccessor.js",
+        "js/DefaultSettings.js",
+        "js/DupeSelector.js",
+        "js/SettingsDataStore.js",
 
-        "chrome/js/bootstraps/question.js"
+        "js/bootstraps/question.js"
       ],
       "run_at": "document_idle",
       "all_frames": false

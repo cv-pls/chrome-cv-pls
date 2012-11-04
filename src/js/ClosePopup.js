@@ -26,7 +26,7 @@ CvPlsHelper.chrome.ClosePopup = function(pluginSettings) {
 
     var html = '';
     html += '<div class="cvhelper-dupeselector" style="border: 1px solid black; height: 22px; width: 22px; position: absolute; top: 35px; right: 0; cursor: pointer;">';
-    html += '  <img src="'+chrome.extension.getURL('ui/bullet_arrow_down.png')+'" alt="" title="" style="top: 3px; left: 4px; position: relative;">';
+    html += '  <img src="'+chrome.extension.getURL('img/bullet_arrow_down.png')+'" alt="" title="" style="top: 3px; left: 4px; position: relative;">';
     html += '</div>';
 
     $('#pane1').append(html);
