@@ -59,6 +59,8 @@
         "cv-pls/src/VoteRequestListener.js",
         "cv-pls/src/VoteRequestProcessor.js",
 
+        "cv-pls/src/ChatApplication.js",
+
         "js/ContentSettingsDataAccessor.js",
         "js/DefaultSettings.js",
         "js/DesktopNotificationDispatcher.js",
