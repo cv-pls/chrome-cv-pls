@@ -36,6 +36,7 @@
         "cv-pls/lib/jquery-1.7.1.min.js",
         "cv-pls/lib/jquery-ui-1.8.18.custom.min.js",
         "cv-pls/lib/griphandler-0.10.1.min.js",
+        "cv-pls/lib/mutations.js",
 
         "cv-pls/src/CvPlsHelper.js",
 
