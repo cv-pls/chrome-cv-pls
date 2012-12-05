@@ -38,9 +38,11 @@
         "cv-pls/lib/griphandler-0.10.1.min.js",
         "cv-pls/lib/shims.js",
         "cv-pls/lib/mutations.js",
+        "cv-pls/lib/animator.js",
 
         "cv-pls/src/CvPlsHelper.js",
 
+        "cv-pls/src/AnimatorFactory.js",
         "cv-pls/src/ApiResponseProcessor.js",
         "cv-pls/src/AudioPlayer.js",
         "cv-pls/src/AvatarNotificationDisplay.js",
