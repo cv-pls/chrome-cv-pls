@@ -1,28 +1,20 @@
-cv-pls
-======
+Chrome [cv-pls]
+===============
 
-This Google Chrome extension will help you close voting questions on Stack Overflow.
+Google Chrome extension wrapper for the [[cv-pls] Helper][1].
 
-It will convert all [cv-pls] and [delv-pls] requests into nice oneboxes in the SO chat.
+Current stable version: [0.19.0](https://github.com/downloads/cv-pls/chrome-cv-pls/cv-pls_0.19.0.crx)  
+Current development version: [0.20-beta1](https://github.com/downloads/cv-pls/chrome-cv-pls/cv-pls_0.20-beta1.crx)
 
-[Download current stable version (0.18.1)][1]
+Installation
+------------
 
-Usage
------
+Download the required package above.
 
-Simply install the plugin and all [cv-pls] or [delv-pls] requests will automatically be converted into formatted oneboxes.
+If you've updated Chrome past [Revision 137699][2], you'll receive a warning that states that the installation has been blocked because it did not originate from the Chrome Web Store.
 
-Settings
---------
+If Chrome did not automatically install the extension on download, or if you downloaded it from another browser, open the extensions page by selecting Tools > Extensions or navigating to [chrome://chrome/extensions/][3]. Drag-and-drop the .crx file onto the page to install.
 
-- Enable/disable addressbar icon
-- Enable/disable @mention beep notification
-- Enable/disable avatar notifications (like mentions and flags)
-- Enable/disable formatting in oneboxes
-- Changing the (initial) height of the oneboxes
-- Enable/disable displaying of the close status
-- Enable/disable polling of close status (please note that there is a requests quota of 10000)
-- Enable backlog in chat
-- Dupes helper
-
-[1]:https://github.com/downloads/cv-pls/cv-pls/cv-pls.0.18.1.crx
+[1]:https://github.com/cv-pls/cv-pls
+[2]:http://src.chromium.org/viewvc/chrome?view=rev&revision=137699
+[3]:chrome://chrome/extensions/
