@@ -1,0 +1,5 @@
+# Keep private keys private
+*.pem
+
+# Avoid committing build files
+*.crx
