@@ -1,11 +1,13 @@
 /*jslint plusplus: true, white: true, browser: true */
-/*global chrome */
+/*global CvPlsHelper, chrome */
 
-CvPlsHelper.chrome.DesktopNotificationDispatcher = function() {
+(function() {
 
-  "use strict";
+  'use strict';
 
-  this.dispatch = function(title, message) {
+  CvPlsHelper.chrome.DesktopNotificationDispatcher = function() {};
+
+  CvPlsHelper.chrome.DesktopNotificationDispatcher.prototype.dispatch = function(title, message) {
     chrome.extension.sendMessage({
       method: 'showNotification',
       title: title,
@@ -13,4 +15,4 @@ CvPlsHelper.chrome.DesktopNotificationDispatcher = function() {
     });
   };
 
-};
+}());

@@ -3,17 +3,10 @@
 
 (function() {
 
-  "use strict";
+  'use strict';
 
   var pluginSettings, desktopNotification;
 
-  /**
-   * Handles messages sent from content scripts
-   *
-   * @param Object request        - the request data
-   * @param MessageSender sender  - the sender of the message
-   * @param Function sendResponse - callback function
-   */
   function messageListener(request, sender, callBack) {
     var currentVersion, currentSavedVersion,
         response = {};

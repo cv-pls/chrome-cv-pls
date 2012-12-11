@@ -1,16 +1,14 @@
 /*jslint plusplus: true, white: true, browser: true */
-/*global CvPlsHelper, chrome */
+/*global CvPlsHelper */
 
-CvPlsHelper.chrome.BackgroundSettingsDataAccessor = function(settingsDataStore, defaultSettings) {
+(function() {
 
   'use strict';
-
-  var self = this;
 
   function normalizeSetting(value, defaultValue) {
     var result;
 
-    if (value == undefined || value === null) {
+    if (value === undefined || value === null) {
       return defaultValue;
     }
 
@@ -49,29 +47,34 @@ CvPlsHelper.chrome.BackgroundSettingsDataAccessor = function(settingsDataStore, 
     return result;
   }
 
-  this.saveSetting = function(key, value) {
-    settingsDataStore.saveSetting(key, value);
+  CvPlsHelper.chrome.BackgroundSettingsDataAccessor = function(settingsDataStore, defaultSettings) {
+    this.settingsDataStore = settingsDataStore;
+    this.defaultSettings = defaultSettings;
   };
 
-  this.getSetting = function(key) {
-    if (defaultSettings[key] !== undefined) {
-      return normalizeSetting(settingsDataStore.getSetting(key), defaultSettings[key]);
+  CvPlsHelper.chrome.BackgroundSettingsDataAccessor.prototype.saveSetting = function(key, value) {
+    this.settingsDataStore.saveSetting(key, value);
+  };
+
+  CvPlsHelper.chrome.BackgroundSettingsDataAccessor.prototype.getSetting = function(key) {
+    if (this.defaultSettings[key] !== undefined) {
+      return normalizeSetting(this.settingsDataStore.getSetting(key), this.defaultSettings[key]);
     }
     return null;
   };
 
-  this.getAllSettings = function() {
+  CvPlsHelper.chrome.BackgroundSettingsDataAccessor.prototype.getAllSettings = function() {
     var key, result = {};
-    for (key in defaultSettings) {
-      if (typeof defaultSettings[key] !== 'function') {
-        result[key] = self.getSetting(key);
+    for (key in this.defaultSettings) {
+      if (typeof this.defaultSettings[key] !== 'function') {
+        result[key] = this.getSetting(key);
       }
     }
     return result;
   };
 
-  this.init = function(callBack) {
+  CvPlsHelper.chrome.BackgroundSettingsDataAccessor.prototype.init = function(callBack) {
     callBack();
   };
 
-};
+}());

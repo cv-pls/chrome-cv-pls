@@ -1,20 +1,18 @@
 /*jslint plusplus: true, white: true, browser: true */
 /*global CvPlsHelper, chrome */
 
-CvPlsHelper.chrome.ContentSettingsDataAccessor = function(settingsDataStore, defaultSettings) {
+(function() {
 
   'use strict';
-
-  var self = this;
 
   function storeSettings(settingsObject) {
     var key;
     for (key in settingsObject) {
-      if (typeof settingsObject[key] !== "function") {
-        if (typeof settingsObject[key] === "object") {
-          settingsDataStore.saveSetting(key, JSON.stringify(settingsObject[key]));
+      if (typeof settingsObject[key] !== 'function') {
+        if (typeof settingsObject[key] === 'object') {
+          this.settingsDataStore.saveSetting(key, JSON.stringify(settingsObject[key]));
         } else {
-          settingsDataStore.saveSetting(key, settingsObject[key]);
+          this.settingsDataStore.saveSetting(key, settingsObject[key]);
         }
       }
     }
@@ -22,7 +20,7 @@ CvPlsHelper.chrome.ContentSettingsDataAccessor = function(settingsDataStore, def
   function normalizeSetting(value, defaultValue) {
     var result;
 
-    if (value == undefined || value === null) {
+    if (value === undefined || value === null) {
       return defaultValue;
     }
 
@@ -32,7 +30,7 @@ CvPlsHelper.chrome.ContentSettingsDataAccessor = function(settingsDataStore, def
         break;
 
       case 'boolean':
-        result = Boolean(value && value !== "false");
+        result = Boolean(value && value !== 'false');
         break;
 
       case 'number':
@@ -61,37 +59,43 @@ CvPlsHelper.chrome.ContentSettingsDataAccessor = function(settingsDataStore, def
     return result;
   }
 
-  this.saveSetting = function(key, value) {
+  CvPlsHelper.chrome.ContentSettingsDataAccessor = function(settingsDataStore, defaultSettings) {
+    this.settingsDataStore = settingsDataStore;
+    this.defaultSettings = defaultSettings;
+  };
+
+  CvPlsHelper.chrome.ContentSettingsDataAccessor.prototype.saveSetting = function(key, value) {
     chrome.extension.sendMessage({
       method: 'saveSetting',
       key: key,
       value: value
     });
-    settingsDataStore.saveSetting(key, value);
+    this.settingsDataStore.saveSetting(key, value);
   };
 
-  this.getSetting = function(key) {
-    if (defaultSettings[key] !== undefined) {
-      return normalizeSetting(settingsDataStore.getSetting(key), defaultSettings[key]);
+  CvPlsHelper.chrome.ContentSettingsDataAccessor.prototype.getSetting = function(key) {
+    if (this.defaultSettings[key] !== undefined) {
+      return normalizeSetting(this.settingsDataStore.getSetting(key), this.defaultSettings[key]);
     }
     return null;
   };
 
-  this.getAllSettings = function() {
+  CvPlsHelper.chrome.ContentSettingsDataAccessor.prototype.getAllSettings = function() {
     var key, result = {};
-    for (key in defaultSettings) {
-      if (typeof defaultSettings[key] !== 'function') {
-        result[key] = self.getSetting(key);
+    for (key in this.defaultSettings) {
+      if (typeof this.defaultSettings[key] !== 'function') {
+        result[key] = this.getSetting(key);
       }
     }
     return result;
   };
 
-  this.init = function(callBack) {
+  CvPlsHelper.chrome.ContentSettingsDataAccessor.prototype.init = function(callBack) {
+    var self = this;
     chrome.extension.sendMessage({method: 'getAllSettings'}, function(settingsObject) {
-      storeSettings(settingsObject);
+      storeSettings.call(self, settingsObject);
       callBack();
     });
   };
 
-};
+}());

@@ -1,24 +1,26 @@
 /*jslint plusplus: true, white: true, browser: true */
 /*global CvPlsHelper, localStorage */
 
-CvPlsHelper.chrome.SettingsDataStore = function() {
+(function() {
 
-  "use strict";
+  'use strict';
 
-  this.getSetting = function(key) {
+  CvPlsHelper.chrome.SettingsDataStore = function() {};
+
+  CvPlsHelper.chrome.SettingsDataStore.prototype.getSetting = function(key) {
     return localStorage.getItem(key);
   };
 
-  this.saveSetting = function(key, value) {
+  CvPlsHelper.chrome.SettingsDataStore.prototype.saveSetting = function(key, value) {
     localStorage.setItem(key, value);
   };
 
-  this.deleteSetting = function(key) {
+  CvPlsHelper.chrome.SettingsDataStore.prototype.deleteSetting = function(key) {
     localStorage.remove(key);
   };
 
-  this.truncate = function() {
+  CvPlsHelper.chrome.SettingsDataStore.prototype.truncate = function() {
     localStorage.clear();
   };
 
-};
+}());

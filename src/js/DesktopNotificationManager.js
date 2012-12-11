@@ -1,24 +1,26 @@
 /*jslint plusplus: true, white: true, browser: true */
 /*global chrome, webkitNotifications */
 
-CvPlsHelper.chrome.DesktopNotificationManager = function() {
+(function() {
 
-  "user strict";
+  'use strict';
 
-  var self = this,
-      notification = null;
+  CvPlsHelper.chrome.DesktopNotificationManager = function() {};
 
-  this.build = function(title, message) {
-    notification = webkitNotifications.createNotification(chrome.extension.getURL('cv-pls/icons/icon48.png'), title, message);
-    notification.onclose = function() {
-      notification = null;
+  CvPlsHelper.chrome.DesktopNotificationManager.prototype.notification = null;
+
+  CvPlsHelper.chrome.DesktopNotificationManager.prototype.build = function(title, message) {
+    var self = this;
+    this.notification = webkitNotifications.createNotification(chrome.extension.getURL('cv-pls/icons/icon48.png'), title, message);
+    this.notification.onclose = function() {
+      self.notification = null;
     };
   };
 
-  this.show = function() {
-    if (notification !== null) {
-      self.notification.show();
+  CvPlsHelper.chrome.DesktopNotificationManager.prototype.show = function() {
+    if (this.notification !== null) {
+      this.notification.show();
     }
   };
 
-};
+}());
