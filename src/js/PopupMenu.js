@@ -1,22 +1,17 @@
 /*jslint plusplus: true, white: true, browser: true */
-/*global chrome */
+/*global CvPlsHelper, chrome */
 
-CvPlsHelper.chrome.PopUpMenu = function() {
+(function() {
 
-  "use strict";
-
-  var version, self = this;
+  'use strict';
 
   function getOptionsUrl() {
     return chrome.extension.getURL('html/settings.html');
-  };
+  }
 
   function getVersion() {
-    if (version === undefined) {
-      version = chrome.app.getDetails().version;
-    }
-    return version;
-  };
+    return chrome.app.getDetails().version;
+  }
 
   function openSettingsPage() {
     chrome.tabs.query({url: getOptionsUrl()}, function(result) {
@@ -26,17 +21,17 @@ CvPlsHelper.chrome.PopUpMenu = function() {
         chrome.tabs.create({url: getOptionsUrl()});
       }
     });
-  };
+  }
 
   function closePopup() {
     window.close();
     return true;
-  };
+  }
 
-  (function() {
+  CvPlsHelper.chrome.PopUpMenu = function() {
     document.getElementById('moreSettings').addEventListener('click', openSettingsPage);
     document.getElementById('closeButton').addEventListener('click', closePopup);
-    document.getElementById('versionNumber').innerText = self.getVersionNumber();
-  }());
+    document.getElementById('versionNumber').innerText = getVersion();
+  };
 
-};
+}());
