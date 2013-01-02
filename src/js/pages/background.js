@@ -7,6 +7,25 @@
 
   var pluginSettings, desktopNotification;
 
+  function makeDefaultSettingsObject(overrides) {
+    var key, result = {};
+    overrides = overrides || {};
+
+    for (key in CvPlsHelper.DefaultSettings) {
+      if (CvPlsHelper.DefaultSettings.hasOwnProperty(key)) {
+        result[key] = CvPlsHelper.DefaultSettings[key];
+      }
+    }
+
+    for (key in overrides) {
+      if (overrides.hasOwnProperty(key)) {
+        result[key] = overrides[key];
+      }
+    }
+
+    return result;
+  }
+
   function messageListener(request, sender, callBack) {
     var currentVersion, currentSavedVersion,
         response = {};
@@ -48,7 +67,7 @@
     }
   }
 
-  pluginSettings = new CvPlsHelper.chrome.BackgroundSettingsDataAccessor(new CvPlsHelper.chrome.SettingsDataStore(), CvPlsHelper.chrome.DefaultSettings);
+  pluginSettings = new CvPlsHelper.chrome.BackgroundSettingsDataAccessor(new CvPlsHelper.chrome.SettingsDataStore(), makeDefaultSettingsObject(CvPlsHelper.chrome.DefaultSettings));
 
   desktopNotification = new CvPlsHelper.chrome.DesktopNotificationManager();
 

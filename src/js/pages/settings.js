@@ -7,7 +7,26 @@ window.addEventListener('DOMContentLoaded', function() {
 
   var pluginSettings, dupeSettingsManager, settingsManager;
 
-  pluginSettings = new CvPlsHelper.chrome.BackgroundSettingsDataAccessor(new CvPlsHelper.chrome.SettingsDataStore(), CvPlsHelper.chrome.DefaultSettings);
+  function makeDefaultSettingsObject(overrides) {
+    var key, result = {};
+    overrides = overrides || {};
+
+    for (key in CvPlsHelper.DefaultSettings) {
+      if (CvPlsHelper.DefaultSettings.hasOwnProperty(key)) {
+        result[key] = CvPlsHelper.DefaultSettings[key];
+      }
+    }
+
+    for (key in overrides) {
+      if (overrides.hasOwnProperty(key)) {
+        result[key] = overrides[key];
+      }
+    }
+
+    return result;
+  }
+
+  pluginSettings = new CvPlsHelper.chrome.BackgroundSettingsDataAccessor(new CvPlsHelper.chrome.SettingsDataStore(), makeDefaultSettingsObject(CvPlsHelper.chrome.DefaultSettings));
 
   dupeSettingsManager = new CvPlsHelper.chrome.DupeSettingsManager(pluginSettings);
   settingsManager = new CvPlsHelper.chrome.SettingsManager(pluginSettings, dupeSettingsManager);
