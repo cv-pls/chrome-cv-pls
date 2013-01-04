@@ -9,7 +9,7 @@ CvPlsHelper.chrome.DupeSettingsManager = function(pluginSettings) {
       opacityTicker,
       overlayDiv, displayDiv,
       tBody;
-  
+
   self = this;
   opacityTicker = 0;
 
