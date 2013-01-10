@@ -1,4 +1,5 @@
 /*jslint plusplus: true, white: true, browser: true */
+/*global CvPlsHelper */
 
 CvPlsHelper.chrome.DefaultSettings = {
 
