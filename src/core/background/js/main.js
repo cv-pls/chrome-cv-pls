@@ -20,7 +20,7 @@
 
         if (currentSavedVersion === null || currentVersion !== currentSavedVersion) {
           pluginSettings.saveSetting('currentSavedVersion', currentVersion);
-          chrome.tabs.create({ url: chrome.extension.getURL('html/update.html') });
+          chrome.tabs.create({ url: 'https://cv-pls.pieterhordijk.com/changelog' });
         }
         break;
 

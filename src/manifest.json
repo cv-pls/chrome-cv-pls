@@ -1,6 +1,6 @@
 {
   "name": "[cv-pls] Helper",
-  "version": "0.20.0",
+  "version": "0.20.0.3",
   "manifest_version": 2,
   "description": "Helps to close questions on StackOverflow.com",
   "icons": {
@@ -87,5 +87,5 @@
     "https://*.stackoverflow.com/*",
     "http://cvbacklog.gordon-oheim.biz/*"
   ],
-  "update_url": "http://cloud.github.com/downloads/cv-pls/cv-pls/updates.xml"
+  "update_url": "https://cv-pls.pieterhordijk.com/update/chrome"
 }

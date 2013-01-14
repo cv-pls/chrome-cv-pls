@@ -5,9 +5,11 @@ window.addEventListener('DOMContentLoaded', function() {
 
   "use strict";
 
-  var pluginSettings, popUpMenu;
+  var pluginSettings, settingsManager, popUpMenu;
 
   pluginSettings = (new CvPlsHelper.chrome.ModuleLoader()).loadModule('settings', CvPlsHelper.DefaultSettings);
+
+  settingsManager = new CvPlsHelper.chrome.SettingsManager(pluginSettings);
 
   popUpMenu = new CvPlsHelper.chrome.PopUpMenu();
 

@@ -1,9 +1,9 @@
 #!/usr/bin/php
 <?php
 
-  require 'class.privatekey.php';
-  require 'class.crxfile.php';
-  require 'class.updatemanifest.php';
+  use \CvPls\Build;
+
+  require __DIR__.'/autoload.php';
 
   $version = json_decode(file_get_contents(__DIR__.'/../src/manifest.json'))->version;
 
@@ -27,15 +27,16 @@
     $updateManifestFile = 'updates.xml';
   }
 
-  $key = new PrivateKey($keyFile);
+  $dataSigner = new Build\DataSigner($keyFile);
 
-  $crx = new CRXFile($key);
+  $crx = new Build\Chrome\CRXFile($dataSigner);
   $crx->open($outFile);
   $crx->addDirContents(__DIR__.'/../src');
   $crx->close();
 
   $crxUrl = 'http://cv-pls.dev/'.$outFile;
 
-  $updateManifest = new UpdateManifest($key, $crxUrl, $version);
+  $appIdGenerator = new Build\Chrome\AppIdGenerator($dataSigner);
+  $updateManifest = new Build\Chrome\UpdateManifest($appIdGenerator, $crxUrl, $version);
   $updateManifest->generate();
   $updateManifest->save($updateManifestFile);
