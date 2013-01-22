@@ -11,20 +11,20 @@
   "background": {
     "scripts": [
       "cv-pls/src/CvPlsHelper.js",
+      "cv-pls/src/DefaultSettings.js",
 
-      "js/BackgroundSettingsDataAccessor.js",
-      "js/DefaultSettings.js",
-      "js/DesktopNotificationManager.js",
-      "js/SettingsDataStore.js",
+      "modules/settings.js",
 
-      "js/pages/background.js"
+      "core/ModuleLoader.js",
+      "core/background/js/DesktopNotificationManager.js",
+      "core/background/js/main.js"
     ]
   },
-  "options_page": "html/settings.html",
+  "options_page": "core/options/html/options.html",
   "page_action": {
     "default_title": "[cv-pls]",
     "default_icon": "cv-pls/icons/icon19.png",
-    "default_popup": "html/popup.html"
+    "default_popup": "core/popup/html/popup.html"
   },
   "content_scripts": [
     {
@@ -51,6 +51,7 @@
         "cv-pls/src/Collection.js",
         "cv-pls/src/CollectionFactory.js",
         "cv-pls/src/CvBacklog.js",
+        "cv-pls/src/DefaultSettings.js",
         "cv-pls/src/DesktopNotification.js",
         "cv-pls/src/GrippieFactory.js",
         "cv-pls/src/OneBox.js",
@@ -67,31 +68,11 @@
 
         "cv-pls/src/ChatApplication.js",
 
-        "js/ContentSettingsDataAccessor.js",
-        "js/DefaultSettings.js",
-        "js/DesktopNotificationDispatcher.js",
-        "js/SettingsDataStore.js",
+        "modules/settings.js",
+        "modules/notifications.js",
 
-        "js/bootstraps/chat.js"
-      ],
-      "run_at": "document_idle",
-      "all_frames": false
-    },
-    {
-      "matches": [
-        "http://stackoverflow.com/questions/*",
-        "http://stackoverflow.com/q/*"
-      ],
-      "js": [
-        "cv-pls/src/CvPlsHelper.js",
-
-        "js/ClosePopup.js",
-        "js/ContentSettingsDataAccessor.js",
-        "js/DefaultSettings.js",
-        "js/DupeSelector.js",
-        "js/SettingsDataStore.js",
-
-        "js/bootstraps/question.js"
+        "core/ModuleLoader.js",
+        "core/content/js/main.js"
       ],
       "run_at": "document_idle",
       "all_frames": false
@@ -106,5 +87,5 @@
     "https://*.stackoverflow.com/*",
     "http://cvbacklog.gordon-oheim.biz/*"
   ],
-  "update_url": "http://cloud.github.com/downloads/cv-pls/cv-pls/updates.xml"
+  "update_url": "https://cv-pls.pieterhordijk.com/update/chrome"
 }

@@ -3,3 +3,7 @@
 
 # Avoid committing build files
 *.crx
+
+# Ignore random windows crap
+*.lnk
+Thumbs.db
