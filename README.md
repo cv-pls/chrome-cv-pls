@@ -3,7 +3,7 @@ Chrome [cv-pls]
 
 Google Chrome extension wrapper for the [[cv-pls] Helper][1].
 
-Current stable version: [0.20.0](https://cv-pls.pieterhordijk.com/cv-pls_0.20.0.crx)  
+Current stable version: [0.20.0](https://cv-pls.pieterhordijk.com/chrome/cv-pls_0.20.0.crx)  
 Current development version: *None*
 
 Installation
