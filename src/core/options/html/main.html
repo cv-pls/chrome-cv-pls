@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>[cv-pls] Helper Preferences</title>
+    <link rel="stylesheet" type="text/css" href="../../global/css/default.css"/>
+    <link rel="stylesheet" type="text/css" href="../../global/css/input.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/main.css"/>
+    <script src="../../../cv-pls/src/CvPlsHelper.js"></script>
+    <script src="../../../cv-pls/src//DefaultSettings.js"></script>
+    <script src="../../../core/ModuleLoader.js"></script>
+    <script src="../../../modules/settings.js"></script>
+    <script src="../js/SettingsForm.js"></script>
+    <script src="../js/SettingsControlManager.js"></script>
+    <script src="../js/SettingsControl.js"></script>
+    <script src="../js/main.js"></script>
+  </head>
+  <body>
+    <div id="page-container">
+      <div class="page">
+        <h1>[cv-pls] Helper Preferences</h1>
+        <div class="displaytable">
+          <section>
+            <h3>Appearance</h3>
+            <div>
+              <div class="checkbox">
+                <input id="pref-control-oneBox" type="checkbox"/>
+                <label for="pref-control-oneBox">OneBox cv requests</label>
+                <input id="pref-control-oneBoxHeight" class="depends-on-oneBox" type="text" data-type="number" pattern="[0-9]*" maxlength="3" style="width:30px"/>
+                <label for="pref-control-oneBox">px</label>
+                <div class="subsection">
+                  <div class="checkbox">
+                    <input id="pref-control-removeCompletedOneboxes" class="depends-on-oneBox" type="checkbox"/>
+                    <label for="pref-control-removeCompletedOneboxes">Remove OneBoxes for questions that have been closed/deleted</label>
+                  </div>
+                </div>
+              </div>
+              <div class="checkbox">
+                <input id="pref-control-cvPlsButton" type="checkbox"/>
+                <label for="pref-control-cvPlsButton">Add cv-pls button to chat</label>
+              </div>
+              <div class="checkbox">
+                <input id="pref-control-delvPlsButton" type="checkbox"/>
+                <label for="pref-control-delvPlsButton">Add delv-pls button to chat</label>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h3>Notification</h3>
+            <div>
+              <div class="checkbox">
+                <input id="pref-control-soundNotification" type="checkbox"/>
+                <label for="pref-control-soundNotification">Enable sound notification (@mention beep)</label>
+              </div>
+              <div class="checkbox">
+                <input id="pref-control-avatarNotification" type="checkbox"/>
+                <label for="pref-control-avatarNotification">Enable avatar notifications</label>
+                <div class="subsection">
+                  <div class="checkbox">
+                    <input id="pref-control-removeLostNotifications" class="depends-on-avatarNotification" type="checkbox"/>
+                    <label for="pref-control-removeLostNotifications">Remove notifications for vote requests that scroll off screen</label>
+                  </div>
+                  <div class="checkbox">
+                    <input id="pref-control-removeCompletedNotifications" class="depends-on-avatarNotification" type="checkbox"/>
+                    <label for="pref-control-removeCompletedNotifications">Remove notifications for questions that have been closed/deleted</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h3>Vote Status</h3>
+            <div>
+              <div class="checkbox">
+                <input id="pref-control-showCloseStatus" type="checkbox"/>
+                <label for="pref-control-showCloseStatus">Show status in onebox</label>
+              </div>
+              <div class="checkbox">
+                <input id="pref-control-pollCloseStatus" class="depends-on-showCloseStatus" type="checkbox"/>
+                <label for="pref-control-pollCloseStatus">Poll server for closed questions every</label>
+                <input id="pref-control-pollInterval" class="depends-on-pollCloseStatus" type="text" data-type="number" pattern="[0-9]*" maxlength="3" style="width:30px"/>
+                <label for="pref-control-pollCloseStatus">minutes</label>
+              </div>
+              <div class="checkbox">
+                <input id="pref-control-strikethroughCompleted" type="checkbox"/>
+                <label for="pref-control-strikethroughCompleted">Strike through vote requests for questions that have been closed/deleted</label>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h3>Backlog</h3>
+            <div>
+              <div class="checkbox">
+                <input id="pref-control-backlogEnabled" type="checkbox"/>
+                <label for="pref-control-backlogEnabled">Change room description into the backlog</label>
+              </div>
+              <div class="checkbox">
+                <label for="pref-control-backlogAmount">Number of items in the list</label>
+                <input id="pref-control-backlogAmount" class="depends-on-backlogEnabled" type="text" data-type="number" pattern="[0-9]*" maxlength="3" style="width:30px"/>
+              </div>
+              <div class="checkbox">
+                <input id="pref-control-backlogRefresh" class="depends-on-backlogEnabled" type="checkbox"/>
+                <label for="pref-control-backlogRefresh">Refresh backlog every</label>
+                <input id="pref-control-backlogRefreshInterval" class="depends-on-backlogRefresh" type="text" data-type="number" pattern="[0-9]*" maxlength="3" style="width:30px"/>
+                <label for="pref-control-backlogRefresh">minutes</label>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

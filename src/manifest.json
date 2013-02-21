@@ -20,11 +20,11 @@
       "core/background/js/main.js"
     ]
   },
-  "options_page": "core/options/html/options.html",
+  "options_page": "core/options/html/main.html",
   "page_action": {
     "default_title": "[cv-pls]",
     "default_icon": "cv-pls/icons/icon19.png",
-    "default_popup": "core/popup/html/popup.html"
+    "default_popup": "core/popup/html/main.html"
   },
   "content_scripts": [
     {

@@ -6,7 +6,7 @@
   'use strict';
 
   function getOptionsUrl() {
-    return chrome.extension.getURL('core/options/html/options.html');
+    return chrome.extension.getURL('core/options/html/main.html');
   }
 
   function getVersion() {

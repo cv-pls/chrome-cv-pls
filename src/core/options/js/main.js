@@ -5,11 +5,13 @@ window.addEventListener('DOMContentLoaded', function() {
 
   "use strict";
 
-  var pluginSettings, dupeSettingsManager, settingsManager;
+  var pluginSettings, settingsForm, settingsControlManager;
 
   pluginSettings = (new CvPlsHelper.chrome.ModuleLoader()).loadModule('settings', CvPlsHelper.DefaultSettings);
 
-  dupeSettingsManager = new CvPlsHelper.chrome.DupeSettingsManager(pluginSettings);
-  settingsManager = new CvPlsHelper.chrome.SettingsManager(pluginSettings, dupeSettingsManager);
+  settingsControlManager = new CvPlsHelper.chrome.SettingsControlManager(pluginSettings);
+  settingsForm = new CvPlsHelper.chrome.SettingsForm(settingsControlManager);
+
+  settingsForm.init();
 
 });
