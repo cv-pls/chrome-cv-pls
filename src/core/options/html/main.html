@@ -69,6 +69,31 @@
             </div>
           </section>
           <section>
+            <h3>History</h3>
+            <div>
+              <div class="checkbox">
+                <input id="pref-control-trackHistory" type="checkbox"/>
+                <label for="pref-control-trackHistory">Track the last</label>
+                <input id="pref-control-clickedListLength" class="depends-on-trackHistory" type="text" data-type="number" pattern="[0-9]*" maxlength="4" style="width:40px"/>
+                <label for="pref-control-trackHistory">visited vote requests</label>
+                <div class="subsection">
+                  <div class="checkbox">
+                    <input id="pref-control-ignoreOneboxClickedPosts" class="depends-on-trackHistory" type="checkbox"/>
+                    <label for="pref-control-ignoreOneboxClickedPosts">Don't OneBox previously visited vote requests on page load</label>
+                  </div>
+                  <div class="checkbox">
+                    <input id="pref-control-ignoreNotifyClickedPosts" class="depends-on-trackHistory" type="checkbox"/>
+                    <label for="pref-control-ignoreNotifyClickedPosts">Don't notify me of previously visited vote requests on page load</label>
+                  </div>
+                  <div class="checkbox">
+                    <input id="pref-control-addVisitedLabelToClickedPosts" class="depends-on-trackHistory" type="checkbox"/>
+                    <label for="pref-control-addVisitedLabelToClickedPosts">Add a "visited" tag to previously visited vote requests on page load</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
             <h3>Vote Status</h3>
             <div>
               <div class="checkbox">
