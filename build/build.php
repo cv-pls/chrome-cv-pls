@@ -24,7 +24,7 @@
   if (isset($argv[3])) {
     $updateManifestFile = $argv[3];
   } else {
-    $updateManifestFile = 'updates.xml';
+    $updateManifestFile = 'update.xml';
   }
 
   $dataSigner = new Build\DataSigner($keyFile);
