@@ -33,6 +33,10 @@
                     <input id="pref-control-removeCompletedOneboxes" class="depends-on-oneBox" type="checkbox"/>
                     <label for="pref-control-removeCompletedOneboxes">Remove OneBoxes for questions that have been closed/deleted</label>
                   </div>
+                  <div class="checkbox">
+                    <input id="pref-control-removeClickedOneboxes" class="depends-on-oneBox" type="checkbox"/>
+                    <label for="pref-control-removeClickedOneboxes">Remove OneBoxes for questions that I have visited</label>
+                  </div>
                 </div>
               </div>
               <div class="checkbox">
@@ -42,6 +46,10 @@
               <div class="checkbox">
                 <input id="pref-control-delvPlsButton" type="checkbox"/>
                 <label for="pref-control-delvPlsButton">Add delv-pls button to chat</label>
+              </div>
+              <div class="checkbox">
+                <input id="pref-control-addVisitedLabelToClickedPosts" type="checkbox"/>
+                <label for="pref-control-addVisitedLabelToClickedPosts">Add a "visited" label to questions that I have visited</label>
               </div>
             </div>
           </section>
@@ -86,8 +94,8 @@
                     <label for="pref-control-ignoreNotifyClickedPosts">Don't notify me of previously visited vote requests on page load</label>
                   </div>
                   <div class="checkbox">
-                    <input id="pref-control-addVisitedLabelToClickedPosts" class="depends-on-trackHistory" type="checkbox"/>
-                    <label for="pref-control-addVisitedLabelToClickedPosts">Add a "visited" tag to previously visited vote requests on page load</label>
+                    <input id="pref-control-addVisitedLabelToPreviouslyClickedPosts" class="depends-on-trackHistory" type="checkbox"/>
+                    <label for="pref-control-addVisitedLabelToPreviouslyClickedPosts">Add a "visited" tag to previously visited vote requests on page load</label>
                   </div>
                 </div>
               </div>
