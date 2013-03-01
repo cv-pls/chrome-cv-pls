@@ -1,6 +1,6 @@
 {
   "name": "[cv-pls] Helper",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "manifest_version": 2,
   "description": "Helps to close questions on StackOverflow.com",
   "icons": {
@@ -52,6 +52,7 @@
         "cv-pls/src/Collection.js",
         "cv-pls/src/CollectionFactory.js",
         "cv-pls/src/CvBacklog.js",
+        "cv-pls/src/CvBacklogUrlManager.js",
         "cv-pls/src/DefaultSettings.js",
         "cv-pls/src/DesktopNotification.js",
         "cv-pls/src/GrippieFactory.js",
@@ -87,7 +88,8 @@
     "https://stackoverflow.com/*",
     "http://*.stackoverflow.com/*",
     "https://*.stackoverflow.com/*",
-    "http://cvbacklog.gordon-oheim.biz/*"
+    "http://cvbacklog.gordon-oheim.biz/*",
+    "https://cv-backlog.pieterhordijk.com/*"
   ],
   "update_url": "https://cv-pls.pieterhordijk.com/update/chrome"
 }
