@@ -136,7 +136,7 @@
       var self = this;
       chrome.extension.sendMessage({method: 'getAllSettings'}, function(settingsObject) {
         storeSettings.call(self, settingsObject);
-        callBack();
+        callBack.call(self);
       });
     };
 
