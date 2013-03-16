@@ -1,5 +1,5 @@
 /*jslint plusplus: true, white: true, browser: true */
-/*global localStorage */
+/*global DataStore, localStorage */
 
 /**
  * Allows access to settings from the background script
@@ -8,7 +8,7 @@
     /**
      * Constructor
      */
-    SettingsDataStore = function() {};
+    DataStore = function() {};
 
     /**
      * Retrieve a setting from localStorage
@@ -17,7 +17,7 @@
      *
      * @return {mixed} The setting value
      */
-    SettingsDataStore.prototype.getSetting = function(key)
+    DataStore.prototype.getSetting = function(key)
     {
         return localStorage.getItem(key);
     };
@@ -28,26 +28,8 @@
      * @param {string} key   The setting name
      * @param {mixed}  value The setting value
      */
-    SettingsDataStore.prototype.saveSetting = function(key, value)
+    DataStore.prototype.saveSetting = function(key, value)
     {
         localStorage.setItem(key, value);
-    };
-
-    /**
-     * Remove a setting from localStorage
-     *
-     * @param {string} key   The setting name
-     */
-    SettingsDataStore.prototype.deleteSetting = function(key)
-    {
-        localStorage.remove(key);
-    };
-
-    /**
-     * Empty the localStorage object
-     */
-    SettingsDataStore.prototype.truncate = function()
-    {
-      localStorage.clear();
     };
 }());

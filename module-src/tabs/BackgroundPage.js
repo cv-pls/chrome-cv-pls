@@ -77,8 +77,10 @@
     {
         var result, response;
 
-        if (message.method === undefined) {
-            console.error('Received invalid message from background page (method not present)');
+        try {
+            message = this.messageFactory.createFromObject(message);
+        } catch (e) {
+            console.error(e.message);
         }
 
         switch (message.method) {

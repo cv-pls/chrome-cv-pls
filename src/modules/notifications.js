@@ -1,21 +1,12 @@
 /*jslint plusplus: true, white: true, browser: true */
-/*global CvPlsHelper */
-/* Built with build-module.php at 2013-03-16 01:45:02 GMT */
+/*global CvPlsHelper, chrome */
+/* Built with build-module.php at 2013-03-16 03:21:47 GMT */
 
 (function() {
 
     'use strict';
 
     var DesktopNotificationDispatcher;
-
-    /**
-     * Module definition
-     */
-    CvPlsHelper.modules.notifications = {
-        load: function(args) {
-            return new DesktopNotificationDispatcher();
-        }
-    };
 
     /**
      * Relays desktop notifications to the background page
@@ -38,5 +29,14 @@
             });
         };
     }());
+
+    /**
+     * Module definition
+     */
+    CvPlsHelper.modules.notifications = {
+        load: function(args) {
+            return new DesktopNotificationDispatcher();
+        }
+    };
 
 }());

@@ -1,5 +1,5 @@
 /*jslint plusplus: true, white: true, browser: true */
-/*global chrome */
+/*global ContentDataAccessor, chrome */
 
 /**
  * Allows access to settings from content scripts
@@ -14,9 +14,9 @@
         for (key in settingsObject) {
             if (typeof settingsObject[key] !== 'function') {
                 if (typeof settingsObject[key] === 'object') {
-                    this.settingsDataStore.saveSetting(key, JSON.stringify(settingsObject[key]));
+                    this.dataStore.saveSetting(key, JSON.stringify(settingsObject[key]));
                 } else {
-                    this.settingsDataStore.saveSetting(key, settingsObject[key]);
+                    this.dataStore.saveSetting(key, settingsObject[key]);
                 }
             }
         }
@@ -25,23 +25,24 @@
     /**
      * Constructor
      *
-     * @param {SettingsDataStore} settingsDataStore Object which stores the settings
-     * @param {DefaultSettings}   defaultSettings   Map of the default settings
+     * @param {DataStore}       dataStore       Object which stores the settings
+     * @param {DefaultSettings} defaultSettings Map of the default settings
      */
-    ContentSettingsDataAccessor = function(settingsDataStore, defaultSettings) {
-        this.settingsDataStore = settingsDataStore;
+    ContentDataAccessor = function(dataStore, defaultSettings)
+    {
+        this.dataStore = dataStore;
         this.defaultSettings = defaultSettings;
     };
 
     /**
-     * @param {SettingsDataStore} Object which stores the settings
+     * @param {DataStore} Object which stores the settings
      */
-    ContentSettingsDataAccessor.prototype.settingsDataStore = null;
+    ContentDataAccessor.prototype.dataStore = null;
 
     /**
      * @param {DefaultSettings} Map of the default settings
      */
-    ContentSettingsDataAccessor.prototype.defaultSettings = null;
+    ContentDataAccessor.prototype.defaultSettings = null;
 
     /**
      * Save a setting in the data store
@@ -49,7 +50,7 @@
      * @param {string} key   The setting name
      * @param {mixed}  value The setting value
      */
-    ContentSettingsDataAccessor.prototype.saveSetting = function(key, value)
+    ContentDataAccessor.prototype.saveSetting = function(key, value)
     {
         chrome.extension.sendMessage({
             method: 'saveSetting',
@@ -57,7 +58,7 @@
             value: value
         });
 
-        this.settingsDataStore.saveSetting(key, value);
+        this.dataStore.saveSetting(key, value);
     };
 
     /**
@@ -67,10 +68,10 @@
      *
      * @return {mixed} The setting value
      */
-    ContentSettingsDataAccessor.prototype.getSetting = function(key)
+    ContentDataAccessor.prototype.getSetting = function(key)
     {
         if (this.defaultSettings[key] !== undefined) {
-            return normalizeSetting(this.settingsDataStore.getSetting(key), this.defaultSettings[key]);
+            return normalizeSetting(this.dataStore.getSetting(key), this.defaultSettings[key]);
         }
 
         return null;
@@ -81,7 +82,7 @@
      *
      * @return {object} The settings as a map
      */
-    ContentSettingsDataAccessor.prototype.getAllSettings = function()
+    ContentDataAccessor.prototype.getAllSettings = function()
     {
         var key, result = {};
 
@@ -99,7 +100,7 @@
      *
      * @param {function} callBack Callback function to execute when the settings are initialized
      */
-    ContentSettingsDataAccessor.prototype.init = function(callBack)
+    ContentDataAccessor.prototype.init = function(callBack)
     {
         var self = this,
             message = {

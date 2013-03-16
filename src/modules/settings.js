@@ -1,25 +1,12 @@
 /*jslint plusplus: true, white: true, browser: true */
 /*global CvPlsHelper, chrome, localStorage */
-/* Built with build-module.php at 2013-03-16 01:30:32 GMT */
+/* Built with build-module.php at 2013-03-16 03:22:43 GMT */
 
 (function() {
 
     'use strict';
 
-    var BackgroundSettingsDataAccessor, ContentSettingsDataAccessor, DefaultSettings, SettingsDataStore;
-
-    /**
-     * Module definition
-     */
-    CvPlsHelper.modules.settings = {
-        load: function(args) {
-            var appSettings = args[0];
-            if (chrome.tabs === undefined) {
-                return new ContentSettingsDataAccessor(new SettingsDataStore(), makeDefaultSettingsObject(DefaultSettings, appSettings));
-            }
-            return new BackgroundSettingsDataAccessor(new SettingsDataStore(), makeDefaultSettingsObject(DefaultSettings, appSettings));
-        }
-    };
+    var BackgroundDataAccessor, ContentDataAccessor, DataStore, DefaultSettings;
 
     /**
      * Normalize a setting to the correct type and value
@@ -110,24 +97,24 @@
         /**
          * Constructor
          *
-         * @param {SettingsDataStore} settingsDataStore Object which stores the settings
+         * @param {DataStore} dataStore Object which stores the settings
          * @param {DefaultSettings}   defaultSettings   Map of the default settings
          */
-        BackgroundSettingsDataAccessor = function(settingsDataStore, defaultSettings)
+        BackgroundDataAccessor = function(dataStore, defaultSettings)
         {
-            this.settingsDataStore = settingsDataStore;
+            this.dataStore = dataStore;
             this.defaultSettings = defaultSettings;
         };
 
         /**
-         * @param {SettingsDataStore} Object which stores the settings
+         * @param {DataStore} Object which stores the settings
          */
-        ContentSettingsDataAccessor.prototype.settingsDataStore = null;
+        BackgroundDataAccessor.prototype.dataStore = null;
 
         /**
          * @param {DefaultSettings} Map of the default settings
          */
-        ContentSettingsDataAccessor.prototype.defaultSettings = null;
+        BackgroundDataAccessor.prototype.defaultSettings = null;
 
         /**
          * Save a setting in the data store
@@ -135,9 +122,9 @@
          * @param {string} key   The setting name
          * @param {mixed}  value The setting value
          */
-        BackgroundSettingsDataAccessor.prototype.saveSetting = function(key, value)
+        BackgroundDataAccessor.prototype.saveSetting = function(key, value)
         {
-            this.settingsDataStore.saveSetting(key, value);
+            this.dataStore.saveSetting(key, value);
         };
 
         /**
@@ -147,10 +134,10 @@
          *
          * @return {mixed} The setting value
          */
-        BackgroundSettingsDataAccessor.prototype.getSetting = function(key)
+        BackgroundDataAccessor.prototype.getSetting = function(key)
         {
             if (this.defaultSettings[key] !== undefined) {
-                return normalizeSetting(this.settingsDataStore.getSetting(key), this.defaultSettings[key]);
+                return normalizeSetting(this.dataStore.getSetting(key), this.defaultSettings[key]);
             }
 
             return null;
@@ -161,7 +148,7 @@
          *
          * @return {object} The settings as a map
          */
-        BackgroundSettingsDataAccessor.prototype.getAllSettings = function()
+        BackgroundDataAccessor.prototype.getAllSettings = function()
         {
             var key, result = {};
 
@@ -179,7 +166,7 @@
          *
          * @param {function} callBack Callback function to execute when the settings are initialized
          */
-        BackgroundSettingsDataAccessor.prototype.init = function(callBack)
+        BackgroundDataAccessor.prototype.init = function(callBack)
         {
             callBack();
         };
@@ -198,9 +185,9 @@
             for (key in settingsObject) {
                 if (typeof settingsObject[key] !== 'function') {
                     if (typeof settingsObject[key] === 'object') {
-                        this.settingsDataStore.saveSetting(key, JSON.stringify(settingsObject[key]));
+                        this.dataStore.saveSetting(key, JSON.stringify(settingsObject[key]));
                     } else {
-                        this.settingsDataStore.saveSetting(key, settingsObject[key]);
+                        this.dataStore.saveSetting(key, settingsObject[key]);
                     }
                 }
             }
@@ -209,23 +196,24 @@
         /**
          * Constructor
          *
-         * @param {SettingsDataStore} settingsDataStore Object which stores the settings
-         * @param {DefaultSettings}   defaultSettings   Map of the default settings
+         * @param {DataStore}       dataStore       Object which stores the settings
+         * @param {DefaultSettings} defaultSettings Map of the default settings
          */
-        ContentSettingsDataAccessor = function(settingsDataStore, defaultSettings) {
-            this.settingsDataStore = settingsDataStore;
+        ContentDataAccessor = function(dataStore, defaultSettings)
+        {
+            this.dataStore = dataStore;
             this.defaultSettings = defaultSettings;
         };
 
         /**
-         * @param {SettingsDataStore} Object which stores the settings
+         * @param {DataStore} Object which stores the settings
          */
-        ContentSettingsDataAccessor.prototype.settingsDataStore = null;
+        ContentDataAccessor.prototype.dataStore = null;
 
         /**
          * @param {DefaultSettings} Map of the default settings
          */
-        ContentSettingsDataAccessor.prototype.defaultSettings = null;
+        ContentDataAccessor.prototype.defaultSettings = null;
 
         /**
          * Save a setting in the data store
@@ -233,7 +221,7 @@
          * @param {string} key   The setting name
          * @param {mixed}  value The setting value
          */
-        ContentSettingsDataAccessor.prototype.saveSetting = function(key, value)
+        ContentDataAccessor.prototype.saveSetting = function(key, value)
         {
             chrome.extension.sendMessage({
                 method: 'saveSetting',
@@ -241,7 +229,7 @@
                 value: value
             });
 
-            this.settingsDataStore.saveSetting(key, value);
+            this.dataStore.saveSetting(key, value);
         };
 
         /**
@@ -251,10 +239,10 @@
          *
          * @return {mixed} The setting value
          */
-        ContentSettingsDataAccessor.prototype.getSetting = function(key)
+        ContentDataAccessor.prototype.getSetting = function(key)
         {
             if (this.defaultSettings[key] !== undefined) {
-                return normalizeSetting(this.settingsDataStore.getSetting(key), this.defaultSettings[key]);
+                return normalizeSetting(this.dataStore.getSetting(key), this.defaultSettings[key]);
             }
 
             return null;
@@ -265,7 +253,7 @@
          *
          * @return {object} The settings as a map
          */
-        ContentSettingsDataAccessor.prototype.getAllSettings = function()
+        ContentDataAccessor.prototype.getAllSettings = function()
         {
             var key, result = {};
 
@@ -283,7 +271,7 @@
          *
          * @param {function} callBack Callback function to execute when the settings are initialized
          */
-        ContentSettingsDataAccessor.prototype.init = function(callBack)
+        ContentDataAccessor.prototype.init = function(callBack)
         {
             var self = this,
                 message = {
@@ -298,20 +286,13 @@
     }());
 
     /**
-     * The default settings for the plugin
-     */
-    DefaultSettings = {
-        showIcon: true
-    };
-
-    /**
      * Allows access to settings from the background script
      */
     (function() {
         /**
          * Constructor
          */
-        SettingsDataStore = function() {};
+        DataStore = function() {};
 
         /**
          * Retrieve a setting from localStorage
@@ -320,7 +301,7 @@
          *
          * @return {mixed} The setting value
          */
-        SettingsDataStore.prototype.getSetting = function(key)
+        DataStore.prototype.getSetting = function(key)
         {
             return localStorage.getItem(key);
         };
@@ -331,28 +312,30 @@
          * @param {string} key   The setting name
          * @param {mixed}  value The setting value
          */
-        SettingsDataStore.prototype.saveSetting = function(key, value)
+        DataStore.prototype.saveSetting = function(key, value)
         {
             localStorage.setItem(key, value);
         };
-
-        /**
-         * Remove a setting from localStorage
-         *
-         * @param {string} key   The setting name
-         */
-        SettingsDataStore.prototype.deleteSetting = function(key)
-        {
-            localStorage.remove(key);
-        };
-
-        /**
-         * Empty the localStorage object
-         */
-        SettingsDataStore.prototype.truncate = function()
-        {
-          localStorage.clear();
-        };
     }());
+
+    /**
+     * The default settings for the plugin
+     */
+    DefaultSettings = {
+        showIcon: true
+    };
+
+    /**
+     * Module definition
+     */
+    CvPlsHelper.modules.settings = {
+        load: function(args) {
+            var appSettings = args[0];
+            if (chrome.tabs === undefined) {
+                return new ContentDataAccessor(new DataStore(), makeDefaultSettingsObject(DefaultSettings, appSettings));
+            }
+            return new BackgroundDataAccessor(new DataStore(), makeDefaultSettingsObject(DefaultSettings, appSettings));
+        }
+    };
 
 }());

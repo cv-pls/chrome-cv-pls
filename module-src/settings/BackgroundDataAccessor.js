@@ -1,4 +1,5 @@
 /*jslint plusplus: true, white: true, browser: true */
+/*global BackgroundDataAccessor */
 
 /**
  * Allows access to settings from the background script
@@ -7,24 +8,24 @@
     /**
      * Constructor
      *
-     * @param {SettingsDataStore} settingsDataStore Object which stores the settings
+     * @param {DataStore} dataStore Object which stores the settings
      * @param {DefaultSettings}   defaultSettings   Map of the default settings
      */
-    BackgroundSettingsDataAccessor = function(settingsDataStore, defaultSettings)
+    BackgroundDataAccessor = function(dataStore, defaultSettings)
     {
-        this.settingsDataStore = settingsDataStore;
+        this.dataStore = dataStore;
         this.defaultSettings = defaultSettings;
     };
 
     /**
-     * @param {SettingsDataStore} Object which stores the settings
+     * @param {DataStore} Object which stores the settings
      */
-    ContentSettingsDataAccessor.prototype.settingsDataStore = null;
+    BackgroundDataAccessor.prototype.dataStore = null;
 
     /**
      * @param {DefaultSettings} Map of the default settings
      */
-    ContentSettingsDataAccessor.prototype.defaultSettings = null;
+    BackgroundDataAccessor.prototype.defaultSettings = null;
 
     /**
      * Save a setting in the data store
@@ -32,9 +33,9 @@
      * @param {string} key   The setting name
      * @param {mixed}  value The setting value
      */
-    BackgroundSettingsDataAccessor.prototype.saveSetting = function(key, value)
+    BackgroundDataAccessor.prototype.saveSetting = function(key, value)
     {
-        this.settingsDataStore.saveSetting(key, value);
+        this.dataStore.saveSetting(key, value);
     };
 
     /**
@@ -44,10 +45,10 @@
      *
      * @return {mixed} The setting value
      */
-    BackgroundSettingsDataAccessor.prototype.getSetting = function(key)
+    BackgroundDataAccessor.prototype.getSetting = function(key)
     {
         if (this.defaultSettings[key] !== undefined) {
-            return normalizeSetting(this.settingsDataStore.getSetting(key), this.defaultSettings[key]);
+            return normalizeSetting(this.dataStore.getSetting(key), this.defaultSettings[key]);
         }
 
         return null;
@@ -58,7 +59,7 @@
      *
      * @return {object} The settings as a map
      */
-    BackgroundSettingsDataAccessor.prototype.getAllSettings = function()
+    BackgroundDataAccessor.prototype.getAllSettings = function()
     {
         var key, result = {};
 
@@ -76,7 +77,7 @@
      *
      * @param {function} callBack Callback function to execute when the settings are initialized
      */
-    BackgroundSettingsDataAccessor.prototype.init = function(callBack)
+    BackgroundDataAccessor.prototype.init = function(callBack)
     {
         callBack();
     };
