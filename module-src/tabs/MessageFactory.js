@@ -9,10 +9,13 @@
      * Constructor
      *
      * @param {UIDGenerator} uidGenerator Object which generates IDs
+     * @param {Tab}          currentTab   Tab object representing the active tab
      */
-    MessageFactory = function(uidGenerator)
+    MessageFactory = function(uidGenerator, currentTab, tabFactory)
     {
         this.uidGenerator = uidGenerator;
+        this.currentTab   = currentTab;
+        this.tabFactory   = tabFactory;
     };
 
     /**
@@ -21,13 +24,24 @@
     MessageFactory.prototype.uidGenerator = null;
 
     /**
+     * @var {Tab} Tab object representing the active tab
+     */
+    MessageFactory.prototype.currentTab = null;
+
+    /**
+     * @var {TabFactory} Factory which makes Tab objects
+     */
+    MessageFactory.prototype.tabFactory = null;
+
+    /**
      * Create a new Message
      *
      * @return {Message} The created object
      */
-    MessageFactory.prototype.create = function(method, data)
+    MessageFactory.prototype.create = function(method, data, id)
     {
-        return new Message(this.uidGenerator.generate(), method, data);
+        id = id || this.uidGenerator.generate();
+        return new Message(id, this.currentTab, method, data);
     };
 
     /**
@@ -43,6 +57,6 @@
             throw new Error('The passed object cannot be converted to a valid Message');
         }
 
-        return new Message(obj.id, obj.method, obj.data);
+        return new Message(obj.id, this.tabFactory.createFromObject(obj.sender), obj.method, obj.data);
     };
 }());

@@ -27,7 +27,7 @@
     /**
      * @var {BackgroundPage} The extension's background page
      */
-    TabManager.prototype.backgroundPage = null;
+    Tab.prototype.backgroundPage = null;
 
     /**
      * @var {object} Collection of event handler callbacks
@@ -126,13 +126,12 @@
     Tab.prototype.sendMessage = function(message)
     {
         var that = this,
-            message = {
-                method: 'tabMessage',
-                tab:    that.id,
-                data:   message
+            data = {
+                dest: that.id,
+                message: message
             };
 
-        this.backgroundPage.sendMessage(message);
+        this.backgroundPage.sendMessage('tabMessage', data);
     };
 
     /**

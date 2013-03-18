@@ -12,9 +12,10 @@
      * @param {string}  method The message method
      * @param {object}  data   The message data
      */
-    Message = function(id, method, data)
+    Message = function(id, sender, method, data)
     {
         this.id     = id;
+        this.sender = sender;
         this.method = method;
         this.data   = data;
     };
@@ -23,6 +24,11 @@
      * @var {integer} The message ID
      */
     Message.prototype.id = null;
+
+    /**
+     * @var {Tab} The message sender
+     */
+    Message.prototype.sender = null;
 
     /**
      * @var {string} The message method

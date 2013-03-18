@@ -7,9 +7,16 @@
     /**
      * Constructor
      */
-    TabManager = function(backgroundPageFactory)
+    TabManager = function(backgroundPage, messageFactory, tabFactory, tabStore)
     {
-        this.backgroundPage = backgroundPageFactory.create(this);
+        this.backgroundPage = backgroundPage;
+        this.messageFactory = messageFactory;
+        this.tabFactory     = tabFactory;
+        this.tabStore       = tabStore;
+
+        backgroundPage.on('message', function(message) {
+            this.onMessage(message);
+        }.bind(this));
 
         this.eventHandlers = {
             newtab:  [],
@@ -21,6 +28,21 @@
      * @var {BackgroundPage} The extension's background page
      */
     TabManager.prototype.backgroundPage = null;
+
+    /**
+     * @var {BackgroundPage} Factory which makes message objects
+     */
+    TabManager.prototype.messageFactory = null;
+
+    /**
+     * @var {BackgroundPage} The extension's background page
+     */
+    TabManager.prototype.tabFactory = null;
+
+    /**
+     * @var {TabStore} Object which holds a collection of accessed tab objects
+     */
+    TabFactory.prototype.tabStore = null;
 
     /**
      * @var {object} Collection of event handler callbacks
@@ -102,6 +124,37 @@
     };
 
     /**
+     * Handle a message received from the background page
+     *
+     * @param {Message} message The recieved message
+     *
+     * @return mixed The return value of the any register event handlers
+     */
+    TabManager.prototype.onMessage = function(message)
+    {
+        switch (message.method) {
+            case 'newTab':
+                result = this.trigger(
+                    'newtab',
+                    message.sender
+                );
+                break;
+
+            case 'message':
+                result = this.trigger(
+                    'message',
+                    message.data,
+                    message.sender
+                );
+                break;
+ 
+            default:
+                this.trigger
+                break;
+        }
+    };
+
+    /**
      * Get a Tab by its ID
      *
      * @param {string}   id       The ID of the Tab to retrieve
@@ -111,19 +164,20 @@
      */
     TabManager.prototype.getTabById = function(id, callback)
     {
+        var tab, message, that = this;
+
         if (typeof callback !== 'function') {
             throw new Error('Invalid callback specified');
         }
 
-        var that = this,
-            message = {
-                method: 'getTabById',
-                data:   {id: id}
-            };
-
-        this.backgroundPage.sendMessage(message, function(response) {
-            callback.call(null, that.tabFactory.createFromObject(that.backgroundPage, response));
-        });
+        tab = this.tabStore.getTabById(id);
+        if (tab) {
+            callback.call(null, tab);
+        } else {
+            this.backgroundPage.sendMessage('getTabById', {id: id}, function(response) {
+                callback.call(null, that.tabFactory.createFromObject(response));
+            });
+        }
     };
 
     /**
@@ -172,18 +226,15 @@
           parts = /hello world/.toString().match(/^\/(.*?)\/([a-z]*)$/i);
           console.log(new RegExp(parts[1], parts[2]));
         */
-        var that = this,
-            pattern = url instanceof RegExp ? {regex: url.toString()} : {string: url};
-            message = {
-                method: 'getTabsByUrl',
-                data:   pattern
-            };
+        var pattern, that = this;
 
         if (typeof callback !== 'function') {
             throw new Error('Invalid callback specified');
         }
 
-        this.backgroundPage.sendMessage(message, function(response) {
+        pattern = url instanceof RegExp ? {regex: url.toString()} : {string: url};
+
+        this.backgroundPage.sendMessage('getTabsByUrl', pattern, function(response) {
             var i, l, tabs = [];
 
             for (i = 0, l = response.length; i < l; i++) {
