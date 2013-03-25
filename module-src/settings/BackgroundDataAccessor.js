@@ -1,5 +1,5 @@
-/*jslint plusplus: true, white: true, browser: true */
-/*global BackgroundDataAccessor */
+/*jslint plusplus: true, white: true, browser: true, sloppy: true */
+/*global BackgroundDataAccessor:true, normalizeSetting:false */
 
 /**
  * Allows access to settings from the background script

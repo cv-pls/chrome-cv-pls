@@ -1,5 +1,5 @@
-/*jslint plusplus: true, white: true, browser: true */
-/*global DataStore, localStorage */
+/*jslint plusplus: true, white: true, browser: true, sloppy: true */
+/*global DataStore:true, localStorage */
 
 /**
  * Allows access to settings from the background script

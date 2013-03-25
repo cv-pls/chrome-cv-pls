@@ -1,12 +1,13 @@
 /*jslint plusplus: true, white: true, browser: true */
-/*global CvPlsHelper, chrome, localStorage */
-/* Built with build-module.php at 2013-03-16 03:22:43 GMT */
+/*global CvPlsHelper, chrome */
+/* Built with build-module.php at Mon, 25 Mar 2013 18:01:21 +0000 */
 
 (function() {
 
     'use strict';
 
-    var BackgroundDataAccessor, ContentDataAccessor, DataStore, DefaultSettings;
+    var BackgroundDataAccessor, ContentDataAccessor, DataStore, DefaultSettings, 
+        makeDefaultSettingsObject, normalizeSetting;
 
     /**
      * Normalize a setting to the correct type and value
@@ -16,7 +17,7 @@
      *
      * @return {mixed} The normalized setting
      */
-    function normalizeSetting(value, defaultValue)
+    normalizeSetting = function(value, defaultValue)
     {
         var result;
 
@@ -57,7 +58,7 @@
         }
 
         return result;
-    }
+    };
 
     /**
      * Create a default settings object based on the default values and configured overrides
@@ -67,7 +68,7 @@
      *
      * @return {object} The created object
      */
-    function makeDefaultSettingsObject(defaults, overrides)
+    makeDefaultSettingsObject = function(defaults, overrides)
     {
         var key, result = {};
         overrides = overrides || {};
@@ -88,7 +89,14 @@
         result.currentSavedVersion = '0.0.0.0';
 
         return result;
-    }
+    };
+
+    /**
+     * The default settings for the plugin
+     */
+    DefaultSettings = {
+        showIcon: true
+    };
 
     /**
      * Allows access to settings from the background script
@@ -96,79 +104,30 @@
     (function() {
         /**
          * Constructor
-         *
-         * @param {DataStore} dataStore Object which stores the settings
-         * @param {DefaultSettings}   defaultSettings   Map of the default settings
          */
-        BackgroundDataAccessor = function(dataStore, defaultSettings)
+        DataStore = function() {};
+
+        /**
+         * Retrieve a setting from localStorage
+         *
+         * @param {string} key The setting name
+         *
+         * @return {mixed} The setting value
+         */
+        DataStore.prototype.getSetting = function(key)
         {
-            this.dataStore = dataStore;
-            this.defaultSettings = defaultSettings;
+            return localStorage.getItem(key);
         };
 
         /**
-         * @param {DataStore} Object which stores the settings
-         */
-        BackgroundDataAccessor.prototype.dataStore = null;
-
-        /**
-         * @param {DefaultSettings} Map of the default settings
-         */
-        BackgroundDataAccessor.prototype.defaultSettings = null;
-
-        /**
-         * Save a setting in the data store
+         * Save a setting in localStorage
          *
          * @param {string} key   The setting name
          * @param {mixed}  value The setting value
          */
-        BackgroundDataAccessor.prototype.saveSetting = function(key, value)
+        DataStore.prototype.saveSetting = function(key, value)
         {
-            this.dataStore.saveSetting(key, value);
-        };
-
-        /**
-         * Retrieve a setting from the data store
-         *
-         * @param {string} key   The setting name
-         *
-         * @return {mixed} The setting value
-         */
-        BackgroundDataAccessor.prototype.getSetting = function(key)
-        {
-            if (this.defaultSettings[key] !== undefined) {
-                return normalizeSetting(this.dataStore.getSetting(key), this.defaultSettings[key]);
-            }
-
-            return null;
-        };
-
-        /**
-         * Retrieve all settings from the data store
-         *
-         * @return {object} The settings as a map
-         */
-        BackgroundDataAccessor.prototype.getAllSettings = function()
-        {
-            var key, result = {};
-
-            for (key in this.defaultSettings) {
-                if (typeof this.defaultSettings[key] !== 'function') {
-                    result[key] = this.getSetting(key);
-                }
-            }
-
-            return result;
-        };
-
-        /**
-         * Initialize the settings values
-         *
-         * @param {function} callBack Callback function to execute when the settings are initialized
-         */
-        BackgroundDataAccessor.prototype.init = function(callBack)
-        {
-            callBack();
+            localStorage.setItem(key, value);
         };
     }());
 
@@ -179,7 +138,7 @@
         /**
          * Store a complete settings object in the data store
          */
-        function storeSettings(settingsObject)
+        var storeSettings = function(settingsObject)
         {
             var key;
             for (key in settingsObject) {
@@ -191,7 +150,7 @@
                     }
                 }
             }
-        }
+        };
 
         /**
          * Constructor
@@ -291,39 +250,81 @@
     (function() {
         /**
          * Constructor
-         */
-        DataStore = function() {};
-
-        /**
-         * Retrieve a setting from localStorage
          *
-         * @param {string} key The setting name
-         *
-         * @return {mixed} The setting value
+         * @param {DataStore} dataStore Object which stores the settings
+         * @param {DefaultSettings}   defaultSettings   Map of the default settings
          */
-        DataStore.prototype.getSetting = function(key)
+        BackgroundDataAccessor = function(dataStore, defaultSettings)
         {
-            return localStorage.getItem(key);
+            this.dataStore = dataStore;
+            this.defaultSettings = defaultSettings;
         };
 
         /**
-         * Save a setting in localStorage
+         * @param {DataStore} Object which stores the settings
+         */
+        BackgroundDataAccessor.prototype.dataStore = null;
+
+        /**
+         * @param {DefaultSettings} Map of the default settings
+         */
+        BackgroundDataAccessor.prototype.defaultSettings = null;
+
+        /**
+         * Save a setting in the data store
          *
          * @param {string} key   The setting name
          * @param {mixed}  value The setting value
          */
-        DataStore.prototype.saveSetting = function(key, value)
+        BackgroundDataAccessor.prototype.saveSetting = function(key, value)
         {
-            localStorage.setItem(key, value);
+            this.dataStore.saveSetting(key, value);
+        };
+
+        /**
+         * Retrieve a setting from the data store
+         *
+         * @param {string} key   The setting name
+         *
+         * @return {mixed} The setting value
+         */
+        BackgroundDataAccessor.prototype.getSetting = function(key)
+        {
+            if (this.defaultSettings[key] !== undefined) {
+                return normalizeSetting(this.dataStore.getSetting(key), this.defaultSettings[key]);
+            }
+
+            return null;
+        };
+
+        /**
+         * Retrieve all settings from the data store
+         *
+         * @return {object} The settings as a map
+         */
+        BackgroundDataAccessor.prototype.getAllSettings = function()
+        {
+            var key, result = {};
+
+            for (key in this.defaultSettings) {
+                if (typeof this.defaultSettings[key] !== 'function') {
+                    result[key] = this.getSetting(key);
+                }
+            }
+
+            return result;
+        };
+
+        /**
+         * Initialize the settings values
+         *
+         * @param {function} callBack Callback function to execute when the settings are initialized
+         */
+        BackgroundDataAccessor.prototype.init = function(callBack)
+        {
+            callBack();
         };
     }());
-
-    /**
-     * The default settings for the plugin
-     */
-    DefaultSettings = {
-        showIcon: true
-    };
 
     /**
      * Module definition

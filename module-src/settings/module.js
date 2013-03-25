@@ -1,5 +1,9 @@
-/*jslint plusplus: true, white: true, browser: true */
-/*global CvPlsHelper, chrome, DataStore, ContentDataAccessor, BackgroundDataAccessor */
+/*jslint plusplus: true, white: true, browser: true, sloppy: true */
+/*global 
+    CvPlsHelper, chrome,
+    makeDefaultSettingsObject:false, 
+    BackgroundDataAccessor, ContentDataAccessor, DataStore, DefaultSettings
+*/
 
 /**
  * Module definition

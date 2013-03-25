@@ -1,5 +1,5 @@
-/*jslint plusplus: true, white: true, browser: true */
-/*global chrome, DesktopNotificationDispatcher */
+/*jslint plusplus: true, white: true, browser: true, sloppy: true */
+/*global chrome, DesktopNotificationDispatcher:true */
 
 /**
  * Relays desktop notifications to the background page

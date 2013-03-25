@@ -1,6 +1,6 @@
 /*jslint plusplus: true, white: true, browser: true */
 /*global CvPlsHelper, chrome */
-/* Built with build-module.php at 2013-03-16 03:21:47 GMT */
+/* Built with build-module.php at Mon, 25 Mar 2013 18:03:09 +0000 */
 
 (function() {
 
@@ -34,7 +34,7 @@
      * Module definition
      */
     CvPlsHelper.modules.notifications = {
-        load: function(args) {
+        load: function() {
             return new DesktopNotificationDispatcher();
         }
     };

@@ -1,5 +1,5 @@
-/*jslint plusplus: true, white: true, browser: true */
-/*global ContentDataAccessor, chrome */
+/*jslint plusplus: true, white: true, browser: true, sloppy: true */
+/*global ContentDataAccessor:true, chrome, normalizeSetting:false */
 
 /**
  * Allows access to settings from content scripts
@@ -8,7 +8,7 @@
     /**
      * Store a complete settings object in the data store
      */
-    function storeSettings(settingsObject)
+    var storeSettings = function(settingsObject)
     {
         var key;
         for (key in settingsObject) {
@@ -20,7 +20,7 @@
                 }
             }
         }
-    }
+    };
 
     /**
      * Constructor
