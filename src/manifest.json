@@ -31,6 +31,8 @@
       "matches": [
         "http://chat.stackoverflow.com/rooms/*",
         "http://chat.stackoverflow.com/transcript/*"
+        "https://chat.stackoverflow.com/rooms/*",
+        "https://chat.stackoverflow.com/transcript/*"
       ],
       "js": [
         "cv-pls/lib/grippie.js",
