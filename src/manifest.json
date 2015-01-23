@@ -30,7 +30,7 @@
     {
       "matches": [
         "http://chat.stackoverflow.com/rooms/*",
-        "http://chat.stackoverflow.com/transcript/*"
+        "http://chat.stackoverflow.com/transcript/*",
         "https://chat.stackoverflow.com/rooms/*",
         "https://chat.stackoverflow.com/transcript/*"
       ],
